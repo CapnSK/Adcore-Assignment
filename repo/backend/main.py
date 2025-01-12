@@ -84,6 +84,7 @@ async def get_payments(
     payments = db.payments.find(query).skip(skip).limit(limit)
     results = []
     for payment in payments:
+        print(payment["evidence_file_id"] if 'evidence_file_id' in payment else '')
         # Calculate total_due
         total_due = calculate_total(payment['due_amount'], payment['discount'], payment['tax'])
         
@@ -98,6 +99,8 @@ async def get_payments(
 
         payment["total_due"] = total_due
         payment["id"] = str(payment["_id"])
+        # if 'evidence_file_id' not in payment:
+        #     payment['evidence_file_id'] = ''
         results.append(payment)
 
     return {'data': results, 'totalCount': totalCount}

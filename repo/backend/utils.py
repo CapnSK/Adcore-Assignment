@@ -28,7 +28,8 @@ def transform(csv_data):
             payment_status=payment_status,
             discount=discount,
             tax=tax,
-            due_amount=due_amount
+            due_amount=due_amount,
+            evidence_file_id=""
         )
         payment_records.append(payment.model_dump())
     return payment_records

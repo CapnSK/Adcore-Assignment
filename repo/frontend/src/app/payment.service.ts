@@ -36,6 +36,11 @@ export class PaymentService {
     return this.restClient.postMultipart(`${this.apiUrl}/upload_evidence/${paymentId}`, formData);
   }
 
+  //download evidence
+  downloadEvidence(paymentId: string): Observable<any> {
+    return this.restClient.get(`${this.apiUrl}/download_evidence/${paymentId}`);
+  }
+
 
   // Delete payment
   deletePayment(paymentId: string): Observable<any> {

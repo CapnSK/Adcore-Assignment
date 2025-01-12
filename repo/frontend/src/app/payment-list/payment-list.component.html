@@ -36,6 +36,7 @@
                 <mat-cell *matCellDef="let payment">
                     <button mat-button (click)="viewDetails(payment.id)">Details</button>
                     <button mat-button (click)="deletePayment(payment.id, payment.name)">Delete</button>
+                    <button *ngIf="payment.evidenceUploaded" mat-button (click)="downloadEvidence(payment.id)">Download</button>
                 </mat-cell>
             </ng-container>
     

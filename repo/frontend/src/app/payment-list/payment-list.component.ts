@@ -3,6 +3,7 @@ import { PaymentService } from '../payment.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-payment-list',
@@ -69,6 +70,11 @@ export class PaymentListComponent implements OnInit {
     this.loadPayments();
   }
 
+  public downloadEvidence(paymentId: string){
+    window.open(`${'http://127.0.0.1:8000'}/download_evidence/${paymentId}`, "*")
+    this.paymentService.downloadEvidence(paymentId).pipe(take(1)).subscribe()
+  }
+
   private _transform(paymentsDTO: Array<any>) {
     return paymentsDTO?.map((row) => {
       return {
@@ -77,7 +83,8 @@ export class PaymentListComponent implements OnInit {
         amount: row.amount,
         totalDue: row.total_due?.toFixed(2),
         status: row.payment_status,
-        dueDate: row.due_date
+        dueDate: row.due_date,
+        evidenceUploaded: !!(row.evidence_file_id ?? '')
       }
     });
   }

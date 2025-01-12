@@ -11,6 +11,7 @@ class PaymentBase(BaseModel):
     discount: Optional[float] = 0
     tax: Optional[float] = 0
     due_amount: float
+    evidence_file_id: Optional[str] = None
 
 class PaymentCreate(PaymentBase):
     pass
@@ -19,7 +20,6 @@ class PaymentUpdate(BaseModel):
     due_date: Optional[str]
     due_amount: Optional[str]
     payment_status: Optional[str]
-    evidence_file_id: Optional[str] = None
 
 # Model for response
 class PaymentResponse(PaymentBase):
