@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RestClientService {
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
 
   }
 
@@ -19,6 +19,16 @@ export class RestClientService {
   postMultipart<T>(url: string, formData: FormData, headers?: HttpHeaders | { [header: string]: string | string[] }): Observable<T> {
     const httpHeaders = headers || new HttpHeaders();
     return this.http.post<T>(url, formData, { headers: httpHeaders });
+  }
+
+  put<T>(url: string, body: any, headers?: HttpHeaders | { [header: string]: string | string[] }): Observable<T>{
+    const httpHeaders = headers || new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.put<T>(url, body, { headers: httpHeaders });
+  }
+
+  delete<T>(url: string, headers?: HttpHeaders | { [header: string]: string | string[] }) : Observable<any>{
+    const httpHeaders = headers;
+    return this.http.delete<T>(url, { headers: httpHeaders });
   }
 
   get<T>(url: string, params?: HttpParams | { [param: string]: string | string[] }): Observable<T> {

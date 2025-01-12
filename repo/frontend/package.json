@@ -1,5 +1,5 @@
 {
-  "name": "adcore-frontend",
+  "name": "frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.0.6",
+    "@angular/animations": "^19.0.0",
     "@angular/cdk": "^19.0.5",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "frontend": "file:",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

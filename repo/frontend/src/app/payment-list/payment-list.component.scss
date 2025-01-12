@@ -1,0 +1,24 @@
+.payment-list-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.scrollable-table-container {
+    flex-grow: 1; /* Allow the table to take up the remaining space */
+    overflow-y: auto; /* Make the table scrollable */
+    padding-bottom: 50px; /* Ensure space for the paginator */
+}
+
+.search-container {
+    position: sticky;
+    top: 0;
+    z-index: 2; /* Ensure paginator stays above the content */
+}
+
+mat-paginator {
+    position: sticky;
+    bottom: 0;
+    z-index: 2; /* Ensure paginator stays above the content */
+    background: white; /* Optional: to make it stand out */
+}
