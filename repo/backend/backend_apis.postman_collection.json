@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "8a937fd5-2d38-49d3-8dd9-2c70305e0892",
+		"name": "Adcore Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16574528",
+		"_collection_link": "https://planetary-spaceship-295100.postman.co/workspace/My-Workspace~48e8bfa6-7806-4ddb-86cf-fae7f4d07414/collection/16574528-8a937fd5-2d38-49d3-8dd9-2c70305e0892?action=share&source=collection_link&creator=16574528"
+	},
+	"item": [
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "load csv data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/load_data/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"load_data",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payee_name\": \"Sankalp Kulkarni\",\r\n    \"amount\": \"100\",\r\n    \"due_date\": \"2025-01-09\",\r\n    \"payment_status\":\"due_now\",\r\n    \"discount\": \"10\",\r\n    \"tax\": \"15\",\r\n    \"due_amount\": \"30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/create_payment/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"create_payment",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get payment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/get_payments/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"get_payments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get payments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/get_payments/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"get_payments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update payment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"payee_name\": \"Sankalp Kulkarni\",\r\n        \"amount\": 120.0,\r\n        \"due_date\": \"2025-01-09T00:00:00\",\r\n        \"payment_status\": \"overdue\",\r\n        \"discount\": 10.0,\r\n        \"tax\": 15.0,\r\n        \"due_amount\": 30.0,\r\n        \"id\": \"67804b9e5c3476e0de555758\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/update_payment/67804b9e5c3476e0de555758/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update_payment",
+						"67804b9e5c3476e0de555758",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete payment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"payee_name\": \"Sankalp Kulkarni\",\r\n        \"amount\": 120.0,\r\n        \"due_date\": \"2025-01-09T00:00:00\",\r\n        \"payment_status\": \"overdue\",\r\n        \"discount\": 10.0,\r\n        \"tax\": 15.0,\r\n        \"due_amount\": 30.0,\r\n        \"id\": \"67804b9e5c3476e0de555758\",\r\n        \"total_due\": 31.5\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/delete_payment/6780d199f088e3e0f7a07c27/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"delete_payment",
+						"6780d199f088e3e0f7a07c27",
+						""
+					],
+					"query": [
+						{
+							"key": "payment_id",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload_evidence",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Msi/Downloads/20230510_150730.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/upload_evidence/67804b9e5c3476e0de555758/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"upload_evidence",
+						"67804b9e5c3476e0de555758",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download_evidence",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/download_evidence/67804b9e5c3476e0de555758/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"download_evidence",
+						"67804b9e5c3476e0de555758",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
