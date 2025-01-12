@@ -90,10 +90,11 @@ async def get_payments(
         # Adjust payment status
         due_date = payment["due_date"]
         today = datetime.datetime.today()
-        if due_date == today:
-            payment["payment_status"] = "due_now"
-        elif due_date < today:
-            payment["payment_status"] = "overdue"
+        if payment["payment_status"] != "completed":
+            if due_date == today:
+                payment["payment_status"] = "due_now"
+            elif due_date < today:
+                payment["payment_status"] = "overdue"
 
         payment["total_due"] = total_due
         payment["id"] = str(payment["_id"])
