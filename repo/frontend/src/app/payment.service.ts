@@ -1,5 +1,5 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RestClientService } from '../lib/rest-client/rest-client.service';
 
@@ -7,7 +7,7 @@ import { RestClientService } from '../lib/rest-client/rest-client.service';
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = `http://127.0.0.1:8000`; // Replace with your backend URL
+  private readonly apiUrl = `http://127.0.0.1:8000`; // Replace with your backend URL
 
   constructor(private readonly restClient: RestClientService) { }
 
