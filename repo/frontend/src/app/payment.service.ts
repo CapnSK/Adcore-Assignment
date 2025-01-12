@@ -7,7 +7,7 @@ import { RestClientService } from '../lib/rest-client/rest-client.service';
   providedIn: 'root'
 })
 export class PaymentService {
-  private readonly apiUrl = `http://127.0.0.1:8000`; // Replace with your backend URL
+  private readonly apiUrl = `http://ec2-3-86-29-68.compute-1.amazonaws.com:8000`; // Replace with your backend URL
 
   constructor(private readonly restClient: RestClientService) { }
 

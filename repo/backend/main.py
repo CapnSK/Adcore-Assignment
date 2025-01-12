@@ -21,8 +21,7 @@ fs = GridFS(db)  # For storing evidence files
 
 app = FastAPI()
 origins = [
-    "http://localhost:4200",
-    "http://localhost:8080",
+    "http://ec2-3-86-29-68.compute-1.amazonaws.com"
 ]
 app.add_middleware(
     CORSMiddleware,

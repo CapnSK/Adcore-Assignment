@@ -71,7 +71,7 @@ export class PaymentListComponent implements OnInit {
   }
 
   public downloadEvidence(paymentId: string){
-    window.open(`${'http://127.0.0.1:8000'}/download_evidence/${paymentId}`, "*")
+    window.open(`${'http://ec2-3-86-29-68.compute-1.amazonaws.com:8000'}/download_evidence/${paymentId}`, "*")
     this.paymentService.downloadEvidence(paymentId).pipe(take(1)).subscribe()
   }
 
