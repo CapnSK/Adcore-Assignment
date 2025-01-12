@@ -32,3 +32,6 @@ def transform(csv_data):
         )
         payment_records.append(payment.model_dump())
     return payment_records
+
+def calculate_total(amt: int, discount: int = 0, tax: int = 0):
+    return amt - (amt * discount / 100) + (amt * tax / 100)

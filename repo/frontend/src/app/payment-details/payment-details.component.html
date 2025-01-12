@@ -1,0 +1,55 @@
+<div class="form-container">
+  <h2>Edit Payment</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <!-- Due Date -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Due Date</mat-label>
+      <input matInput formControlName="due_date" type="date" placeholder="Select due date">
+      <mat-error *ngIf="paymentForm.get('due_date')?.hasError('required')">
+        Due date is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Due Amount -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Due Amount</mat-label>
+      <input matInput formControlName="due_amount" type="number" min="0" placeholder="Enter due amount">
+      <mat-error *ngIf="paymentForm.get('due_amount')?.hasError('required')">
+        Due amount is required.
+      </mat-error>
+      <mat-error *ngIf="paymentForm.get('due_amount')?.hasError('min')">
+        Due amount must be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Payment Status -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="payment_status" placeholder="Select payment status">
+        <mat-option value="due_today">Due Today</mat-option>
+        <mat-option value="overdue">Overdue</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+      </mat-select>
+      <mat-error *ngIf="paymentForm.get('payment_status')?.hasError('required')">
+        Status is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Evidence File (only for completed status) -->
+    <div *ngIf="showFileInput">
+      <!-- <mat-form-field appearance="fill" class="full-width"> -->
+        <mat-label>Evidence File</mat-label>
+        <input type="file" (change)="onFileChange($event)" formControlName="evidence_file">
+          <mat-error *ngIf="!file && showFileInput">
+            Evidence file is required when marking the payment as completed.
+          </mat-error>
+        <!-- </input> -->
+      <!-- </mat-form-field> -->
+    </div>
+
+    <!-- Submit Button -->
+    <button mat-raised-button class="blue-button" color="primary" type="submit" [disabled]="paymentForm.invalid || loading">
+      Save Changes
+    </button>
+  </form>
+</div>

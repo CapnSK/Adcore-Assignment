@@ -19,13 +19,23 @@ export class PaymentService {
 
   // Add new payment
   addPayment(payment: any): Observable<any> {
-    return this.restClient.postJson<any>(this.apiUrl, payment);
+    return this.restClient.postJson<any>(`${this.apiUrl}/create_payment/`, payment);
   }
 
   // Update payment
   updatePayment(paymentId: string, payment: any): Observable<any> {
-    return this.restClient.postJson<any>(`${this.apiUrl}/${paymentId}`, payment);
+    return this.restClient.put<any>(`${this.apiUrl}/update_payment/${paymentId}`, payment);
   }
+
+  //upload evidence
+  uploadEvidence(paymentId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    if (file) {
+      formData.append('file', file);
+    }
+    return this.restClient.postMultipart(`${this.apiUrl}/upload_evidence/${paymentId}`, formData);
+  }
+
 
   // Delete payment
   deletePayment(paymentId: string): Observable<any> {
@@ -34,6 +44,6 @@ export class PaymentService {
 
   // Fetch payment details
   getPaymentDetails(paymentId: string): Observable<any> {
-    return this.restClient.get<any>(`${this.apiUrl}/${paymentId}/`);
+    return this.restClient.get<any>(`${this.apiUrl}/get_payment/${paymentId}/`);
   }
 }

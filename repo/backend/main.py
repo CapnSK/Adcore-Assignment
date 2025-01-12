@@ -12,7 +12,7 @@ import datetime
 import os
 
 from models import PaginatedPaymentsResponse, PaymentCreate, PaymentResponse, PaymentUpdate
-from utils import transform
+from utils import calculate_total, transform
 
 # MongoDB connection setup
 client = MongoClient("mongodb://localhost:27017")  # Your MongoDB URI
@@ -49,7 +49,7 @@ async def load_data():
 
 @app.post("/create_payment/", response_model=PaymentResponse)
 async def create_payment(payment: PaymentCreate):
-    total_due = payment.due_amount - (payment.due_amount * payment.discount / 100) + (payment.due_amount * payment.tax / 100)
+    total_due = calculate_total(payment['due_amount'], payment['discount'], payment['tax'])
     
     payment_data = {
         "payee_name": payment.payee_name,
@@ -85,7 +85,7 @@ async def get_payments(
     results = []
     for payment in payments:
         # Calculate total_due
-        total_due = payment["due_amount"] - (payment["due_amount"] * payment.get("discount", 0) / 100) + (payment["due_amount"] * payment.get("tax", 0) / 100)
+        total_due = calculate_total(payment['due_amount'], payment['discount'], payment['tax'])
         
         # Adjust payment status
         due_date = payment["due_date"]
@@ -100,6 +100,14 @@ async def get_payments(
         results.append(payment)
 
     return {'data': results, 'totalCount': totalCount}
+
+@app.get("/get_payment/{payment_id}/", response_model = PaymentResponse)
+async def get_payment(payment_id: str):
+    payment_data = db.payments.find_one({"_id": ObjectId(payment_id)})
+    total_due = calculate_total(payment_data['due_amount'], payment_data['discount'], payment_data['tax'])
+    payment_data["total_due"] = total_due
+    payment_data["id"] = payment_id
+    return payment_data
 
 
 @app.put("/update_payment/{payment_id}/", response_model=PaymentResponse)
@@ -121,7 +129,7 @@ async def update_payment(payment_id: str, payment: PaymentUpdate):
     payment_data["evidence_file_id"] = payment.evidence_file_id
     payment_data["id"] = str(payment_data["_id"])
 
-    total_due = payment_data["due_amount"] - (payment_data["due_amount"] * payment_data["discount"] / 100) + (payment_data["due_amount"] * payment_data["tax"] / 100)
+    total_due = calculate_total(payment_data['due_amount'], payment_data['discount'], payment_data['tax'])
     payment_data["total_due"] = total_due
     return payment_data
 

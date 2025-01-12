@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaymentService } from '../payment.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-list',
@@ -23,7 +24,7 @@ export class PaymentListComponent implements OnInit {
   };
   filter = '';
 
-  constructor(private readonly paymentService: PaymentService) { }
+  constructor(private readonly paymentService: PaymentService, private _router: Router) { }
 
   ngOnInit() {
     this.loadPayments();
@@ -57,7 +58,7 @@ export class PaymentListComponent implements OnInit {
   }
 
   viewDetails(id: string) {
-
+    this._router.navigate(['/payment-details', id])
   }
 
   pageChanged(event: PageEvent){

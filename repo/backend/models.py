@@ -16,6 +16,8 @@ class PaymentCreate(PaymentBase):
     pass
 
 class PaymentUpdate(BaseModel):
+    due_date: Optional[str]
+    due_amount: Optional[str]
     payment_status: Optional[str]
     evidence_file_id: Optional[str] = None
 
