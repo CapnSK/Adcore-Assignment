@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 
 # Pydantic model for creating and updating payments
@@ -26,6 +26,10 @@ class PaymentResponse(PaymentBase):
 
     class Config:
         orm_mode = True
+
+class PaginatedPaymentsResponse(BaseModel):
+    totalCount: int
+    data: List[PaymentResponse]
 
 # Evidence file model
 class EvidenceFile(BaseModel):

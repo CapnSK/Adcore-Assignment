@@ -1,14 +1,18 @@
+import math
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from gridfs import GridFS
 from bson import ObjectId
 from pydantic import BaseModel
 from typing import List, Optional
+import pandas
 import datetime
 import os
 
-from models import PaymentCreate, PaymentResponse, PaymentUpdate
+from models import PaginatedPaymentsResponse, PaymentCreate, PaymentResponse, PaymentUpdate
+from utils import transform
 
 # MongoDB connection setup
 client = MongoClient("mongodb://localhost:27017")  # Your MongoDB URI
@@ -16,11 +20,31 @@ db = client["payment_db"]  # Database name
 fs = GridFS(db)  # For storing evidence files
 
 app = FastAPI()
+origins = [
+    "http://localhost:4200",
+    "http://localhost:8080",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+dirname  = os.path.dirname(__file__)
 
 
 @app.get("/")
 def root():
     return "Server is Up"
+
+@app.get("/load_data/")
+async def load_data():
+    filename = os.path.join(dirname, 'payment_information.csv')
+    # file = "../payment_information.csv"
+    csv = pandas.read_csv(filename)
+    payment_records = transform(csv)
+    result = db.payments.insert_many(payment_records)
 
 
 @app.post("/create_payment/", response_model=PaymentResponse)
@@ -43,20 +67,21 @@ async def create_payment(payment: PaymentCreate):
 
     return payment_data
 
-@app.get("/get_payments/", response_model=List[PaymentResponse])
+@app.get("/get_payments/", response_model=PaginatedPaymentsResponse)
 async def get_payments(
-    filter: Optional[str] = None,
     search: Optional[str] = None,
     skip: int = 0,
-    limit: int = 10
+    limit: int = 10000
 ):
     # Query MongoDB for payments
     query = {}
     if search:
         query["payee_name"] = {"$regex": search, "$options": "i"}
 
+    totalCount = db.payments.count_documents(query)
+    
+    # totalCount = len(list(payments))
     payments = db.payments.find(query).skip(skip).limit(limit)
-
     results = []
     for payment in payments:
         # Calculate total_due
@@ -74,7 +99,7 @@ async def get_payments(
         payment["id"] = str(payment["_id"])
         results.append(payment)
 
-    return results
+    return {'data': results, 'totalCount': totalCount}
 
 
 @app.put("/update_payment/{payment_id}/", response_model=PaymentResponse)
